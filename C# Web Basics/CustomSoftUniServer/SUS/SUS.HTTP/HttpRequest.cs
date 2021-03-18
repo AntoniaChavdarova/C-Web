@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SUS.HTTP
@@ -43,6 +44,18 @@ namespace SUS.HTTP
                 else
                 {
                     bodyBuilder.AppendLine(line);
+                }
+
+                if(this.Headers.Any(x => x.Name == HttpConstants.RequestCookieHeader))
+                {
+                    var cookiesAsString = this.Headers.FirstOrDefault(x => x.Name == HttpConstants.RequestCookieHeader).Value;
+
+                    var cookies = cookiesAsString.Split(new string[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var item in cookies)
+                    {
+                        this.Cookies.Add(new Cookie(cookiesAsString));
+                    }
                 }
 
 
