@@ -73,13 +73,25 @@ namespace SUS.HTTP
                     var request = new HttpRequest(requestAsString);
                     Console.WriteLine($"{request.Method } {request.Path} => {request.Headers.Count} headers ");
 
-                    var responseHTML = "Wlecome!" + 
-                        request.Headers.FirstOrDefault(x => x.Name == "UserAgent")?.Value;
-                    var responseBodyBytes = Encoding.UTF8.GetBytes(responseHTML);
-                    var response = new HttpResponse("text/html", responseBodyBytes);
-                    response.Headers.Add(new Header("Server", "SUS Server 1.0"));
-                    var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
+                    HttpResponse response;
+                    if (this.routeTable.ContainsKey(request.Path))
+                    {
+                        var action = this.routeTable[request.Path];
+                        response = action(request);
+                    }
+                    else
+                    {
+                        //NotFound
+                        response = new HttpResponse("text/html", new byte[0], HttpStatusCode.NotFound);
+                    }
 
+                    response.Headers.Add(new Header("Server", "SUS Server 1.0"));
+                    response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString())
+                    {
+                        HttpOnly = true,
+                        MaxAge = 60 * 24 * 60 * 60
+                    });
+                    var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
                     await stream.WriteAsync(responseHeaderBytes , 0 , responseHeaderBytes.Length);
                     await stream.WriteAsync(response.Body ,0 , response.Body.Length);
 

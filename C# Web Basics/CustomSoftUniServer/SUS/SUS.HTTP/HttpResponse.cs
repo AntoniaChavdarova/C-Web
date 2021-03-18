@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SUS.HTTP
@@ -7,6 +8,11 @@ namespace SUS.HTTP
     {
         public HttpResponse(string contentType , byte[] body , HttpStatusCode statusCode = HttpStatusCode.Ok)
         {
+            if(body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
             this.StatusCode = statusCode;
             this.Body = body;
             this.Headers = new List<Header>
