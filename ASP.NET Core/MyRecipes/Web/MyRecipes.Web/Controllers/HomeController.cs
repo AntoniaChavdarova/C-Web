@@ -2,15 +2,24 @@
 {
     using System.Diagnostics;
 
-    using MyRecipes.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using MyRecipes.Services.Data;
+    using MyRecipes.Web.ViewModels;
 
     public class HomeController : BaseController
     {
+        private readonly IGetCountsService service;
+
+        public HomeController(IGetCountsService service)
+        {
+            this.service = service;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = this.service.GetCount();
+
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()
