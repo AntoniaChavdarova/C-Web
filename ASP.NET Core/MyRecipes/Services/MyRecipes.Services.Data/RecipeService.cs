@@ -1,14 +1,14 @@
 ﻿namespace MyRecipes.Services.Data
 {
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-using MyRecipes.Data.Common.Repositories;
-using MyRecipes.Data.Models;
-using MyRecipes.Web.ViewModels.Recipes;
+    using MyRecipes.Data.Common.Repositories;
+    using MyRecipes.Data.Models;
+    using MyRecipes.Web.ViewModels.Recipes;
 
-public class RecipesService : IRecipesService
+    public class RecipesService : IRecipesService
     {
         private readonly IDeletableEntityRepository<Recipe> recipesRepository;
         private readonly IDeletableEntityRepository<Ingredient> ingredientsRespository;

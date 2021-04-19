@@ -21,6 +21,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using MyRecipes.Services;
 
     public class Startup
     {
@@ -68,6 +69,7 @@
             services.AddTransient<IGetCountsService, GetCountsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IRecipesService, RecipesService>();
+            services.AddTransient<IGotvachBgScraperService, GotvchacBgScraperService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
