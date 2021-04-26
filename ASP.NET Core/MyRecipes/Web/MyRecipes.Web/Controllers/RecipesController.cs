@@ -1,8 +1,10 @@
 ﻿namespace MyRecipes.Web.Controllers
 {
+    using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
     using MyRecipes.Services.Data;
@@ -12,11 +14,16 @@
     {
         private readonly IRecipesService recipesService;
         private readonly ICategoriesService categoriesService;
+        private readonly IWebHostEnvironment environment;
 
-        public RecipesController(IRecipesService recipesService, ICategoriesService categoriesService)
+        public RecipesController(
+            IRecipesService recipesService,
+            ICategoriesService categoriesService,
+            IWebHostEnvironment environment)
         {
             this.recipesService = recipesService;
             this.categoriesService = categoriesService;
+            this.environment = environment;
         }
 
         [Authorize]
@@ -40,7 +47,17 @@
             //moje i chres usermanager : var user = await this.userManager.GetUserAsync(this.User);
 
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            await this.recipesService.CreateAsync(input, userId);
+
+            try
+            {
+            await this.recipesService.CreateAsync(input, userId, $"{this.environment.WebRootPath}/images");
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+                input.CategoriesItems = this.categoriesService.GetAllAsKeyValuePairs();
+                return this.View(input);
+            }
 
             return this.Redirect("/");
         }
