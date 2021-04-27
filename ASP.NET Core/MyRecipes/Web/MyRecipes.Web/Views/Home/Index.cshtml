@@ -5,12 +5,39 @@
 }
 
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-<div class="col-md-6 offset-md-3">
 
-    <p>We have:</p>
-    <ul class="list-group"></ul>
-    <li class="list-group-item bg-warning">Recipes: @Model.RecipesCount</li>
-    <li class="list-group-item bg-white">Categories: @Model.CategoriesCount</li>
-    <li class="list-group-item bg-warning">Images: @Model.ImagesCount</li>
-    <li class="list-group-item bg-white">Ingredients: @Model.IngredientsCount</li>
-</div>
+    <hr />
+        <h3>Recipes: @Model.RecipesCount</h3>
+        <div class="progress" style="height: 50px;">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="241" aria-valuemax="400"></div>
+        </div>
+        <h3>Categories: @Model.CategoriesCount</h3>
+        <div class="progress" style="height: 50px;">
+            <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="50" aria-valuemin="120" aria-valuemax="400"></div>
+        </div>
+        <h3>Images: @Model.ImagesCount</h3>
+        <div class="progress" style="height: 50px;">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="241" aria-valuemax="400"></div>
+        </div>
+        <h3>Ingredients:  @Model.IngredientsCount</h3>
+        <div class="progress" style="height: 50px;">
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="100" aria-valuemin="264" aria-valuemax="400"></div>
+        </div>
+    
+<hr/>
+        <div class="col-md-12">
+            <div class="row">
+
+                @foreach (var recipe in this.Model.RandomRecipe)
+                {
+                    <div class="card col-md-6">
+                        <img src="@recipe.ImageUrl" class="card-img-top" alt="@recipe.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@recipe.Name</h5>
+                            <p class="card-text">@recipe.CategoryName</p>
+                            <a asp-controller="Recipes" asp-action="ById" asp-route-id="@recipe.Id" class="btn btn-primary">Go to recipe</a>
+                        </div>
+                    </div>
+                }
+
+            </div>

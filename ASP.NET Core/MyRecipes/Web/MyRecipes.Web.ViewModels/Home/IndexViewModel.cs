@@ -1,7 +1,11 @@
 ﻿namespace MyRecipes.Web.ViewModels.Home
 {
-   public class IndexViewModel
+    using System.Collections.Generic;
+
+    public class IndexViewModel
     {
+        public IEnumerable<IndexPageRecipeViewModel> RandomRecipe { get; set; }
+
         public int RecipesCount { get; set; }
 
         public int CategoriesCount { get; set; }
