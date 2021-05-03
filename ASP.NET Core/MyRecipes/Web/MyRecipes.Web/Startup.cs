@@ -22,6 +22,7 @@
     using MyRecipes.Services.Data;
     using MyRecipes.Services.Mapping;
     using MyRecipes.Services.Messaging;
+    using MyRecipes.Web.Hubs;
     using MyRecipes.Web.ViewModels;
 
     public class Startup
@@ -66,6 +67,7 @@
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
+            services.AddSignalR();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddAntiforgery(options =>
             {
@@ -80,7 +82,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender(configuration["Sendgrid:ApiKey"]));
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IGetCountsService, GetCountsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
@@ -126,6 +128,7 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapHub<ChatHub>("/chat");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();

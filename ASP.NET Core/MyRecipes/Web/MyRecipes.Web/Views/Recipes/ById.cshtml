@@ -38,9 +38,12 @@
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                 {
                 <li class="single-meta">
-                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit</a>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
                 </li>
                 }
+            <li class="single-meta">
+                <button class="btn btn-warning" onclick="window.print()">Print</button>
+            </li>
                 </ul>
             </div>
         </div>
