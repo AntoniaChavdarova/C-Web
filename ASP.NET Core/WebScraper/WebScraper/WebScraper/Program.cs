@@ -1,6 +1,7 @@
 ﻿using AngleSharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebScraper
@@ -19,8 +20,8 @@ namespace WebScraper
             {
                 for (int i = 1; i < id; i++)
                 {
-                    // var document = await context.OpenAsync($"https://pochivka.bg/apartamenti-a4/{i}");
-                    var document = await context.OpenAsync($"https://pochivka.bg/kashti-a3/{i}");
+                     var document = await context.OpenAsync($"https://pochivka.bg/apartamenti-a4/{i}");
+                   // var document = await context.OpenAsync($"https://pochivka.bg/kashti-a3/{i}");
 
                     Console.WriteLine($"Page:{i}");
                     var elements = document.QuerySelectorAll(".result-item");
@@ -30,10 +31,14 @@ namespace WebScraper
 
                         //var childern = item.ChildElementCount;
                         //Console.WriteLine(childern);
-                        //var title = item.QuerySelector(".info > .left-side > .header");
-                        //Console.WriteLine("Title");
-                        //Console.WriteLine(title.TextContent);
-
+                       // var title = item.QuerySelector(".info > .left-side > .header");
+                      
+                       //Console.WriteLine(title.TextContent);
+                       // if (title.TextContent.Contains(','))
+                       // {
+                       //     var city = title.TextContent.Split(',');
+                       //     Console.WriteLine(city[1]);
+                       // }
                         //// var description = item.QuerySelector(".info > .left-side >  div.content.xl");
                         //var description = document.QuerySelector(".result-item > .info > .left-side");
                         //Console.WriteLine("Description");
@@ -78,18 +83,31 @@ namespace WebScraper
                 var titlePage = page.QuerySelector(" .page-title > .pull-left > h1");
                 Console.WriteLine(titlePage.TextContent);
 
+                var city = page.QuerySelector("body > div.container > div > div.property-view.vip > div:nth-child(1) > div > div > div > div.sub-title");
+                Console.WriteLine(city.TextContent);
+
                 var descriptionPage = page.QuerySelector("div.col-4.margin-0.pull-right > div.description");
                 Console.WriteLine(descriptionPage.TextContent);
 
                 var udobstva = page.QuerySelector("div.col-4 > div.extras > ul");
                 Console.WriteLine(udobstva.TextContent);
 
+                var tablewithInfo = page.QuerySelectorAll("#prices > table > tbody > tr > td").Select(x => x.TextContent)
+                    .ToList();
+                
+               Console.WriteLine($" Type: {tablewithInfo[0]}");
+               Console.WriteLine($" Mesta: {tablewithInfo[1]}");
+               Console.WriteLine($" Broi ot tipa: {tablewithInfo[2]}");
+               Console.WriteLine($" Cena lqto: {tablewithInfo[3]}");
+               Console.WriteLine($" Cena zima: {tablewithInfo[5]}");
+           
+
                 var imags = page.GetElementsByClassName("gallery-slider");
 
                 foreach (var img in imags)
                 {
                     Console.WriteLine("Images:");
-                    var image = img.QuerySelectorAll("img"); //.Take(4)
+                    var image = img.QuerySelectorAll("img");
                     foreach (var one in image)
                     {
                         Console.WriteLine(one.GetAttribute("content"));
