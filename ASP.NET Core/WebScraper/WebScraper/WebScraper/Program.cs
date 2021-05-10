@@ -83,6 +83,13 @@ namespace WebScraper
                 var titlePage = page.QuerySelector(" .page-title > .pull-left > h1");
                 Console.WriteLine(titlePage.TextContent);
 
+                var phone = page.QuerySelector("#popup_phone > div.content > div.pull-left");
+                Console.WriteLine($"Phone {phone.TextContent.TrimStart()}");
+
+                var address = page.QuerySelector("#popup_address > div.content");
+                Console.WriteLine("Address");
+                Console.WriteLine(address.TextContent);
+
                 var city = page.QuerySelector("body > div.container > div > div.property-view.vip > div:nth-child(1) > div > div > div > div.sub-title");
                 Console.WriteLine(city.TextContent);
 
