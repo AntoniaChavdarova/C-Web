@@ -96,9 +96,13 @@ namespace WebScraper
                 var descriptionPage = page.QuerySelector("div.col-4.margin-0.pull-right > div.description");
                 Console.WriteLine(descriptionPage.TextContent);
 
-                var udobstva = page.QuerySelector("div.col-4 > div.extras > ul");
-                Console.WriteLine(udobstva.TextContent);
+                var udobstva = page.QuerySelectorAll("div.col-4 > div.extras > ul");
+                Console.WriteLine("Amenities:");
+                foreach (var amenity in udobstva)
+                {
 
+                    Console.WriteLine(amenity.TextContent);
+                }
                 var tablewithInfo = page.QuerySelectorAll("#prices > table > tbody > tr > td").Select(x => x.TextContent)
                     .ToList();
                 
