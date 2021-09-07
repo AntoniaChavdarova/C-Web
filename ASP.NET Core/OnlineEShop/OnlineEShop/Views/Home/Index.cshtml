@@ -1,0 +1,23 @@
+﻿@model OnlineEShop.ViewModels.Categories.CategoriesInListModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Find everything with a click </p>
+</div>
+<hr />
+<div class="row">
+    @foreach (var category in this.Model.Categories)
+    {
+        <div class="card col-md-4">
+
+            <div class="card-body">
+                <h5 class="card-title">@category.Name</h5>
+                <img class="img-fluid" src="" alt="">
+                <a asp-controller="Products" asp-action="AllByCategory" asp-route-id="@category.Id" class="btn btn-outline-dark">Виж повече</a>
+            </div>
+        </div>
+    }
+</div>

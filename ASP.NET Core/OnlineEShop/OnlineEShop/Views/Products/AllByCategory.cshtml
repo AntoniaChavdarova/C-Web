@@ -1,0 +1,19 @@
+﻿@model ProductsViewModels
+@{
+    ViewBag.Title = "All";
+}   
+
+<div class="row">
+    @foreach (var item in Model.Products)
+    {
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="@item.ImageUrl" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <h7>@item.Price лв</h7>
+                <p class="card-text">@item.Description</p>
+                <a asp-controller="Products" asp-action="AllById" asp-route-id="@item.Id" class="btn btn-outline-dark">Виж повече</a>
+            </div>
+        </div>
+     }
+</div>
