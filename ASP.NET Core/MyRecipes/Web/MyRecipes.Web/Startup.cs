@@ -86,7 +86,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IGetCountsService, GetCountsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
-            services.AddTransient<IRecipesService, RecipesService>();
+            services.AddTransient<IRecipesService, RecipeService>();
             services.AddTransient<IGotvachBgScraperService, GotvchacBgScraperService>();
             services.AddTransient<IVoteService, VoteService>();
             services.AddTransient<ISearchService, SearchService>();

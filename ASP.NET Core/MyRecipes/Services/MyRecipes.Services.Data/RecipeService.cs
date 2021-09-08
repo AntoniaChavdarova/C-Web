@@ -11,13 +11,13 @@
     using MyRecipes.Services.Mapping;
     using MyRecipes.Web.ViewModels.Recipes;
 
-    public class RecipesService : IRecipesService
+    public class RecipeService : IRecipesService
     {
         private readonly string[] alloewdExtensions = new[] { "jpg", "png", "gif" };
         private readonly IDeletableEntityRepository<Recipe> recipesRepository;
         private readonly IDeletableEntityRepository<Ingredient> ingredientsRespository;
 
-        public RecipesService(
+        public RecipeService(
             IDeletableEntityRepository<Recipe> recipesRepository,
             IDeletableEntityRepository<Ingredient> ingredientsRespository)
         {
